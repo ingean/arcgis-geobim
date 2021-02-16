@@ -14,22 +14,21 @@ function (
 
   return {
     getToken: () => {
-      //Add code
-      let token = fetch(tokenURL, {
+      let data = new URLSearchParams();
+      data.append("client_id", clientId);
+      data.append("client_secret", clientSecret);
+      data.append("grant_type", "client_credentials");
+      data.append("scope", "data:read");
+
+      fetch(tokenURL, {
         "method": 'POST',
         "headers": {
           "content-type": "application/x-www-form-urlencoded",
         },
-        "body": JSON.stringify({
-          "client_id": clientId,
-          "client_secret": clientSecret,
-          "grant_type": "client_credentials",
-          "scope": "data:read"
-        })
+        "body": data
       })
-
-      token.then((response) => {
-        token = JSON.parse(response);
+      .then((response) => {
+        let token = JSON.parse(response);
       })
     }
   }
