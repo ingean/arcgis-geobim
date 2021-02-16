@@ -10,6 +10,8 @@ function (
   const clientSecret = 'pWYGrMLFECjdtA4x';
   const tokenURL = 'https://developer.api.autodesk.com/authentication/v1/authenticate';
 
+  let token = '';
+
   //Add private functions
 
   return {
@@ -28,7 +30,11 @@ function (
         "body": data
       })
       .then((response) => {
-        let token = JSON.parse(response);
+        response.json()
+        .then(body => {
+          token = body["access_token"]; 
+          return token;
+        })
       })
     }
   }
