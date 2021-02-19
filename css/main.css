@@ -1,8 +1,56 @@
 html,
-body,
-#viewDiv {
+body {
   padding: 0;
   margin: 0;
   height: 100%;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  flex: 0 1 auto;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+#viewers-panel {
+  /*padding: 0;
+  margin: 0;
+  height: 80%;
+  width: 100%;
+  */
+  display: flex;
+  flex-direction: row;
+  flex: 1 1 auto;
+}
+
+#GISViewer {
+  position:absolute;
+  left: 0;
+  top: 0px;
+  padding: 0;
+  margin: 0;
+  height: 70%;
+  width: 50%;
+}
+
+#BIMViewer {
+  position: absolute;
+  right: 0;
+  top: 0px;
+  height: 70%;
+  width: 50%;
+}
+
+#closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
 }
