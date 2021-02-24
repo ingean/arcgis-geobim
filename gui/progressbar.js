@@ -22,10 +22,14 @@ var getTrackStyle = function (el) {
     }
   }
   
-  // Change background gradient
+  // Set different color for range input before and after thumb/marker
+  let c1 = '#5abdf9'; // Active track color
+  let c2 = '#232323'; // Must be same as background
+  let c3 = '#f1f1f1'; // Original track color
+
   for (var i = 0; i < prefs.length; i++) {
-    style += '.range {background: linear-gradient(to right, #37adbf 0%, #37adbf ' + val + '%, #232323 ' + val + '%, #232323 100%)}';
-    style += '.range input::-' + prefs[i] + '{background: linear-gradient(to right, #37adbf 0%, #37adbf ' + val + '%, #b2b2b2 ' + val + '%, #b2b2b2 100%)}';
+    style += `.range {background: linear-gradient(to right, ${c1} 0%, ${c1} ${val}%, ${c2} ${val}%, ${c2} 100%)}`;
+    style += `.range input::-${prefs[i]}{background: linear-gradient(to right, ${c1} 0%, ${c1} ${val}%, ${c3} ${val}%, ${c3} 100%)}`;
   }
 
   return style;
@@ -34,6 +38,8 @@ var getTrackStyle = function (el) {
 range.addEventListener('input', (e) => {
   sheet.textContent = getTrackStyle(e.target);
   highlightPhase();
+  drawProgressPieChart();
+  drawCurrentVolumeIndicator();
 });
 
 document.getElementById('range-labels')

@@ -1,6 +1,10 @@
+:root {
+  --color-bar: #f1f1f1;
+  --color-bar-hl: #5abdf9;
+}
 
 #progressbar {
-  padding: 20px 0 20px 200px;
+  padding: 50px 0 40px 200px;
 }
 
 #range-bar {
@@ -33,7 +37,7 @@
   height: 18px;
   margin: -8px 0 0;
   border-radius: 50%;
-  background: #37adbf;
+  background: var(--color-bar-hl);
   cursor: pointer;
   border: 0 !important;
 }
@@ -42,7 +46,7 @@
   height: 18px;
   margin: -8px 0 0;
   border-radius: 50%;
-  background: #37adbf;
+  background: var(--color-bar-hl);
   cursor: pointer;
   border: 0 !important;
 }
@@ -51,7 +55,7 @@
   height: 18px;
   margin: -8px 0 0;
   border-radius: 50%;
-  background: #37adbf;
+  background: var(--color-bar-hl);
   cursor: pointer;
   border: 0 !important;
 }
@@ -59,19 +63,19 @@
   width: 100%;
   height: 2px;
   cursor: pointer;
-  background: #b2b2b2;
+  background: var(--color-bar);
 }
 .range input::-moz-range-track {
   width: 100%;
   height: 2px;
   cursor: pointer;
-  background: #b2b2b2;
+  background: var(--color-bar);
 }
 .range input::-ms-track {
   width: 100%;
   height: 2px;
   cursor: pointer;
-  background: #b2b2b2;
+  background: var(--color-bar);
 }
 .range input:focus {
   background: none;
@@ -84,7 +88,7 @@
   width: 100%;
   height: 2px;
   cursor: pointer;
-  background: #b2b2b2;
+  background: var(--color-bar);
 }
 
 
@@ -100,14 +104,13 @@
   margin: 18px -41px 0;
   padding: 0;
   list-style: none;
-  font-family: sans-serif;
 }
 .range-labels li {
   position: relative;
   float: left;
   width: 90.25px;
   text-align: center;
-  color: #b2b2b2;
+  color: var(--color-bar);
   font-size: 14px;
   cursor: pointer;
 }
@@ -120,14 +123,14 @@
   margin: 0 auto;
   width: 9px;
   height: 9px;
-  background: #b2b2b2;
+  background: var(--color-bar);
   border-radius: 50%;
 }
 .range-labels .active {
-  color: #37adbf;
+  color: var(--color-bar-hl);
 }
 .range-labels .selected::before {
-  background: #37adbf;
+  background: var(--color-bar-hl);
 }
 .range-labels .active.selected::before {
   display: none;

@@ -1,55 +1,84 @@
+:root {
+  --color-panel-txt: #f1f1f1;
+  --color-panel-bg: #232323;
+  --color-panel-hl: #5abdf9;
+}
+
 html,
 body {
   padding: 0;
   margin: 0;
   height: 100%;
   width: 100%;
-  display: flex;
-  flex-direction: column;
 }
 
-header {
-  flex: 0 1 auto;
-}
-
-main {
+.page-container {
   display: flex;
   flex-direction: column;
   width: 100%;
   height: 100%;
 }
-#viewers-panel {
-  /*padding: 0;
-  margin: 0;
-  height: 80%;
-  width: 100%;
-  */
+
+
+header {
+  flex: 0 1 auto;
+}
+
+.viewers-panel {
   display: flex;
   flex-direction: row;
   flex: 1 1 auto;
 }
 
+.viewer-panel {
+  width: 50%;
+}
+
+
 #GISViewer {
   position:absolute;
   left: 0;
-  top: 0px;
+  top: 63px;
   padding: 0;
   margin: 0;
-  height: 70%;
+  height: calc(100% - 463px);
   width: 50%;
 }
 
 #BIMViewer {
   position: absolute;
   right: 0;
-  top: 0px;
-  height: 70%;
+  top: 63px;
+  height: calc(100% - 463px);
   width: 50%;
 }
 
+
+.db-panel {
+  flex: 0 1 400px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background-color: var(--color-panel-bg);
+  transition: 0.5s;
+}
+
+.db-panel a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: var(--color-panel-txt);
+  transition: 0.3s;
+}
+
+.db-panel a:hover {
+  color: var(--color-panel-hl);
+}
+
+
 #closebtn {
   position: absolute;
-  top: 0;
+  bottom: 330px;
   right: 25px;
   font-size: 36px;
   margin-left: 50px;

@@ -8,23 +8,27 @@ document.getElementById('toggleBIMbtn')
 .addEventListener('click', toggleBIM)
 
 function togglePanel(panelId, buttonId, height, caption) {
-  let panel = document.getElementById(panelId);
+  let panel = document.querySelector(panelId);
   let rheight = 100 - height;
 
-  if (height === 0) {
+  if (panel.style.display === "") {
     panel.style.display = "none"; //Hide panel
   } else {
     panel.style.display = "";
   }
   
-  document.getElementById("BIMViewer").style.height = String(rheight) + '%';
-  document.getElementById("GISViewer").style.height = String(rheight) + '%';
+  let container = document.querySelector('.viewers-panel');
+  let style = window.getComputedStyle(container);
+
+
+  document.getElementById("BIMViewer").style.height = style.height;
+  document.getElementById("GISViewer").style.height = style.height;
   document.getElementById(buttonId).title = caption;
   document.getElementById(buttonId).innerText = caption; 
 }
   
 function toggleDashboard() {
-  let panel = document.getElementById("dashboard-panel");
+  let panel = document.querySelector(".db-panel");
   let style = window.getComputedStyle(panel);
 
   if (style.display === "none") {
@@ -35,11 +39,11 @@ function toggleDashboard() {
 }
     
 function openDashboard() {
-  togglePanel('dashboard-panel', 'togglebtn', 30, 'Skjul dashboard');
+  togglePanel('.db-panel', 'togglebtn', 30, 'Skjul dashboard');
 }
 
 function closeDashboard() {
-  togglePanel('dashboard-panel', 'togglebtn', 0, 'Vis dashboard');
+  togglePanel('.db-panel', 'togglebtn', 0, 'Vis dashboard');
 }
 
 function toggleBIM() {

@@ -57,7 +57,6 @@ function initViewer() {
     })
 
     console.log('Initialization complete, loading a model next...');
-    //viewer.setBackgroundColor(0,0,0,0,0,0)
     viewer.setLightPreset(2);
     viewer.setEnvMapBackground(false);
     Autodesk.Viewing.Document.load(documentId, onDocumentLoadSuccess, onDocumentLoadFailure);
@@ -83,12 +82,9 @@ function getProperties() {
     }
 
     props = data;
-    dbIds = data[1];
-
-    //let ids = retValue.dbIds;
-    viewer.isolate(dbIds);
-    viewer.fitToView(dbIds);
-    //console.log('Larges part is', mostVolumeId, 'with volume:', retValue.volume);
+    //viewer.isolate(dbIds);
+    viewer.fitToView(data[1]);
+    startDashboard(data);
   })
   .catch(err => {
     console.log("Failed to get properties from model!")
@@ -112,9 +108,6 @@ function userFunction(pdb) {
     return null;
 
   let data = {};
-  //let ids = [];
-  
-  //console.log('Selected phase is: ' + userData + ' with type: ' + typeof userData)
 
   pdb.enumObjects(dbId => {
     pdb.enumObjectProperties(dbId, (attrId, valId) => {
@@ -126,18 +119,12 @@ function userFunction(pdb) {
         } else {
           data[value] = [dbId];
         }
-        
-        //if (value.trim() === userData) {
-          //ids.push(dbId);
-        //}
-
+ 
         return true;
       }
     });
   });
 
-  //console.log('Found: ' + ids.length + ' objects with progress 7');
-  //console.log('INFO: User Function completed...');
   return data;
 }
 
@@ -147,8 +134,15 @@ async function loadBIMViewer() {
 
 function highlightPhase(){
   let range = document.querySelector('.range input');
-  dbIds = props[range.value]; 
-  viewer.isolate(dbIds);
-  viewer.fitToView(dbIds);
+  let ids = [];
+  
+  for (var i = 1; i <= range.value; i++) {
+    ids = ids.concat(props[i])
+  }
+
+  //dbIds = props[range.value]; 
+  //viewer.isolate(dbIds);
+  viewer.isolate(ids);
+  //viewer.fitToView(dbIds);
 }
 

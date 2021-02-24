@@ -1,52 +1,65 @@
-#dashboard-panel {
-  display: flex;
-  flex-direction: column;
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  height: 30%;
-  background-color: #232323;
-  transition: 0.5s;
-}
+:root {
+  --color-card-txt: #f1f1f1;
+  --color-card-bg: #333333;
+  --color-card-hl: #5abdf9;
+} 
 
-#dashboard-panel a {
-  padding: 8px 8px 8px 32px;
-  text-decoration: none;
-  font-size: 25px;
-  color: #818181;
-  display: block;
-  transition: 0.3s;
-}
-
-#dashboard-panel a:hover {
-  color: #f1f1f1;
-}
-
-#dashboard-content {
+#db-content {
   display: flex;
   flex-direction: column;
 }
 
-#dashboard-content {
-  display: flex;
-  flex-direction: column;
-}
-
-#dashboard-cards {
+#db-cards {
   display: flex;
   flex-direction: row;
 }
 
-.chart-card {
-  position: relative;
-  bottom: 0;
-  height: 90%;
-  width: 300px;
-  padding: 20px;
-  margin: 10px;
-  background-color: black;
+.db-row {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
 }
 
-#piechart {
-  right: 0;
+.db-card {
+  position: relative;
+  bottom: 0;
+  padding: 20px;
+  margin: 10px;
+  background-color: var(--color-card-bg);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.db-card-s {
+  height: 45%;
+  width: 200px;
+}
+
+.db-card-l {
+  height: 75%;
+  width: 300px;
+}
+
+.db-indicator {
+  color: var(--color-card-txt);
+}
+
+.i-header {
+  font-size: medium;
+}
+
+.i-text-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.i-text {
+  font-size: x-large;
+}
+
+.i-footer {
+  font-size: small;
 }
