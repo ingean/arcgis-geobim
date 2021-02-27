@@ -95,31 +95,54 @@ function getProperties() {
 
 //Runs in worker thread not able to debug with Chrome
 function userFunction(pdb) {
-  console.log('Hit');
   let attrIdProgress = -1;
+  let attrIdVolume = -1;
+
   pdb.enumAttributes((i, attrDef, attrRaw) => { //Find index for property 'Fremdrift'
     if (attrDef.name === 'Fremdrift') {
-      attrIdProgress = i;
-      return true; 
+      attrIdProgress = i; 
+    } else if (attrDef.name === 'Volume') {
+      attrIdVolume = i;
     }
   });
 
-  if (attrIdProgress === -1) // No property found
+  if (attrIdProgress === -1 && attrIdVolume === -1) {
+    console.log('Found neither Fremdrift nor Volume attributes');
     return null;
+  } 
+    
 
-  let data = {};
+  let data = {
+    parts: {},
+    volume: {}
+  };
 
   pdb.enumObjects(dbId => {
+    let phase = -1;
     pdb.enumObjectProperties(dbId, (attrId, valId) => {
       if (attrId === attrIdProgress) { // Only process 'Fremdrift' property.
-        
         let value = pdb.getAttrValue(attrId, valId);
-        if(data.hasOwnProperty(value)) {
-          data[value].push(dbId); 
+        phase = value;
+
+        if(data.parts.hasOwnProperty(value)) {
+          data.parts[value].push(dbId); 
         } else {
-          data[value] = [dbId];
+          data.parts[value] = [dbId];
         }
- 
+        return true;
+      }
+    });
+    pdb.enumObjectProperties(dbId, (attrId, valId) => {
+      if (attrId === attrIdVolume) { // Only process 'Volume' property.
+        let value = pdb.getAttrValue(attrId, valId);
+        if (!isNaN(value)) {
+          value = Number(value);
+          if(data.volume.hasOwnProperty(phase)) {
+            data.volume[phase] = data.volume[phase] + value; 
+          } else {
+            data.volume[phase] = value;
+          }
+        }
         return true;
       }
     });
@@ -137,12 +160,9 @@ function highlightPhase(){
   let ids = [];
   
   for (var i = 1; i <= range.value; i++) {
-    ids = ids.concat(props[i])
+    ids = ids.concat(props.parts[i]);
   }
 
-  //dbIds = props[range.value]; 
-  //viewer.isolate(dbIds);
   viewer.isolate(ids);
-  //viewer.fitToView(dbIds);
 }
 

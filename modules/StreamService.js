@@ -4,9 +4,7 @@ define([
   "esri/layers/StreamLayer"
 ],
 function(WebScene, SceneView, StreamLayer) {
-
-  let wsUrl = 'wss://us-iot.arcgis.com/d8avj4l9dv7mdfsa/d8avj4l9dv7mdfsa/streams/arcgis/ws/services/JevnakerTestStream/StreamServer';
-  let url = 'https://us-iot.arcgis.com/d8avj4l9dv7mdfsa/d8avj4l9dv7mdfsa/streams/arcgis/rest/services/JevnakerTestStream/StreamServer';
+  let url = 'https://demo09.geodata.no/arcgis/rest/services/e16-Stream/StreamServer';
 
   function createStreamLayer() {
     return new StreamLayer({
@@ -14,13 +12,24 @@ function(WebScene, SceneView, StreamLayer) {
                 purgeOptions: {
                 displayCount: 10000
               }
-          });
+    });
   }
 
   return {
     addStream: (webscene) => {
       let streamLayer = createStreamLayer();
-      webscene.add(streamLayer);
+      
+      //streamLayer.when(e => {
+        streamLayer.load().then(d => {
+          console.log(d);
+        })
+      //})   
+      
+      
+      
+      
+      
+      //webscene.add(streamLayer);
     }
   }
 });

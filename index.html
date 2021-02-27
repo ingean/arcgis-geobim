@@ -67,7 +67,29 @@
       </header>
       <div class="viewers-panel">
         <div class="viewer-panel">
-          <div id="GISViewer" class="viewer-panel"></div>
+          <div id="GISViewer" class="viewer-panel">
+            <!--div id="slice-menu" class="esri-widget">
+              <div id="sliceContainer"></div>
+              <div id="sliceOptions">
+                <button
+                  class="esri-button esri-button--secondary"
+                  id="resetPlaneBtn"
+                  type="button"
+                  title="Reset slice plane">
+                  Reset slice plane
+                </button>
+                <button
+                  class="esri-button esri-button--secondary"
+                  id="clearPlaneBtn"
+                  type="button"
+                  title="Clear slice plane">
+                  Clear slice
+                </button>
+                <input type="checkbox" id="tiltEnabled" checked /><label
+                  for="tiltEnabled">Allow tilt on slice plane</label>
+              </div>
+            </div-->
+          </div>
         </div>
         <div class="viewer-panel">
           <div id="BIMViewer" class="viewer-panel"></div>
@@ -106,23 +128,23 @@
                 <div class="i-header">Volum</div>
                 <div class="i-text-container">
                   <div class="icon-ui-chart i-icon"></div>
-                  <div id="indicator-volume" class="i-text">13,675 m<sup>3</sup></div>  
+                  <div id="indicator-volume" class="i-text"></div>  
                 </div>
               </div>
             </div>
             <div class="db-row">
               <div class="db-card db-card-s db-indicator">
-                <div class="i-header">Planlagt utgravd</div>
-                <div class="i-text-container">
-                  <div class="icon-ui-chart i-icon"></div>
-                  <div id="indicator-planned" class="i-text"></div>  
-                </div>
-              </div>
-              <div class="db-card db-card-s db-indicator">
                 <div class="i-header">Faktisk utgravd</div>
                 <div class="i-text-container">
                   <div class="icon-ui-chart i-icon"></div>
                   <div id="indicator-removed" class="i-text"></div>  
+                </div>
+              </div>
+              <div class="db-card db-card-s db-indicator">
+                <div class="i-header">Gjenstående graving</div>
+                <div class="i-text-container">
+                  <div class="icon-ui-chart i-icon"></div>
+                  <div id="indicator-planned" class="i-text"></div>  
                 </div>
               </div>
             </div>
@@ -142,11 +164,17 @@
                 </div>
               </div>
             </div>
-            <div id="barchart-card" class="db-card db-card-l">
-              <canvas id="barchart"></canvas>
+            <div class="db-card db-card-l">
+              <canvas id="parts-barchart"></canvas>
             </div>
-            <div id="piechart-card" class="db-card db-card-l">
-              <canvas id="piechart"></canvas>
+            <div class="db-card db-card-l">
+              <canvas id="volume-barchart"></canvas>
+            </div>
+            <div class="db-card db-card-l">
+              <canvas id="voxel-piechart"></canvas>
+            </div>
+            <div class="db-card db-card-l">
+              <div id="machine-list" class="db-list"></div>
             </div>
           </div>
         </div>
@@ -157,11 +185,11 @@
     <script src="https://js.arcgis.com/4.18/"></script>
     <script src="https://developer.api.autodesk.com/modelderivative/v2/viewers/7.*/viewer3D.min.js"></script>
 
-    <script type="text/javascript" src="lib/Chart.min.js"></script>
-    <script type="text/javascript" src="gui/panels.js"></script>
-    <script type="text/javascript" src="gui/progressbar.js"></script>
-    <script type="text/javascript" src="modules/Forge.js"></script>
-    <script type="text/javascript" src="modules/Dashboard.js"></script>
-    <script type="text/javascript" src="main.js"></script> 
+    <script src="lib/Chart.min.js"></script>
+    <script src="gui/panels.js"></script>
+    <script src="gui/progressbar.js"></script>
+    <script src="modules/Forge.js"></script>
+    <script src="modules/Dashboard.js"></script>
+    <script src="main.js"></script> 
   </body>
 </html>

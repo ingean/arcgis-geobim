@@ -38,8 +38,10 @@ var getTrackStyle = function (el) {
 range.addEventListener('input', (e) => {
   sheet.textContent = getTrackStyle(e.target);
   highlightPhase();
+  drawCountIndicator(props.parts);
+  drawVolumeIndicator(props.volume);
   drawProgressPieChart();
-  drawCurrentVolumeIndicator();
+  drawVoxelVolumeIndicators();
 });
 
 document.getElementById('range-labels')

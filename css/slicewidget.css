@@ -1,0 +1,20 @@
+#slice-menu {
+  padding: 0.8em;
+  max-width: 250px;
+}
+
+#sliceContainer {
+  width: inherit;
+}
+
+#sliceOptions {
+  margin: 0 15px;
+}
+
+#sliceOptions>button {
+  margin-bottom: 15px;
+}
+
+#sliceContainer {
+  max-width: 228px;
+}

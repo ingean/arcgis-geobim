@@ -1,6 +1,12 @@
 const agolUrl = 'https://services.arcgis.com/2JyTvMWQSnM2Vi8q/arcgis/rest/services/Volumberegninger/FeatureServer/0';
 let vData = {};
 
+// Set Charts.js defaults
+Chart.defaults.global.defaultFontColorn = 'rgba(241, 241, 241, 1)';
+Chart.defaults.global.defaultFontFamily = "'Avenir Next W01','Avenir Next W00','Avenir Next','Avenir','Helvetica Neue','sans-serif'";
+Chart.defaults.global.defaultFontStyle = 'normal';
+Chart.defaults.global.defaultFontSize = 12;
+
 function drawDoughNut(data, labels, title, id) {
   let ctx = document.getElementById(id);
 
@@ -10,13 +16,13 @@ function drawDoughNut(data, labels, title, id) {
       datasets: [{
         data: data,
         backgroundColor: [
+          'rgba(90, 189, 249, 0.2)',
           'rgba(255, 99, 132, 0.2)',
-          'rgba(54, 162, 235, 0.2)',
           'rgba(255, 206, 86, 0.2)'
         ],
         borderColor: [
+          'rgba(90, 189, 249, 1)',
           'rgba(255, 99, 132, 1)',
-          'rgba(54, 162, 235, 1)',
           'rgba(255, 206, 86, 1)'
         ],
         borderWidth: 1
@@ -29,7 +35,9 @@ function drawDoughNut(data, labels, title, id) {
         display: true,
         position: "top",
         text: title,
-        fontSize: 18,
+        fontSize: 16,
+        fontFamily: "'Avenir Next W01','Avenir Next W00','Avenir Next','Avenir','Helvetica Neue','sans-serif'",
+        fontStyle: 'normal',
         fontColor: 'rgba(241, 241, 241, 1)'
       },
       legend: {
@@ -58,7 +66,9 @@ function drawBars(data, labels, title, id) {
         display: true,
         position: "top",
         text: title,
-        fontSize: 18,
+        fontSize: 16,
+        fontFamily: "'Avenir Next W01','Avenir Next W00','Avenir Next','Avenir','Helvetica Neue','sans-serif'",
+        fontStyle: 'normal',
         fontColor: 'rgba(241, 241, 241, 1)'
       },
       legend: {
@@ -75,17 +85,31 @@ function drawBars(data, labels, title, id) {
   });
 }
 
+function drawVolumeIndicator(stats) {
+  let range = document.querySelector('.range input');
+  let phase = range.value;
+  let volume = stats[phase - 1];
+
+  volume = volume.toLocaleString();
+  document.getElementById('indicator-volume').innerHTML = volume + ' m<sup>3</sup>';
+}
+
 function drawCountIndicator(stats) {
-  let count = 0;
+  let range = document.querySelector('.range input');
+  let phase = range.value;
+  let count = stats[phase - 1].length;
+  let totCount = 0;
+  
   for (let key in stats) {
-    count += stats[key].length;
+    totCount += stats[key].length;
   }
 
   count = count.toLocaleString();
+  totCount = totCount.toLocaleString();
   document.getElementById('indicator-parts').textContent = count;
 }
 
-function drawProgressBarChart(stats) {
+function drawPartsBarChart(stats) {
   let labels = []
   for (let i = 1; i < 8; i++) labels.push('Fase ' + i);
 
@@ -94,7 +118,19 @@ function drawProgressBarChart(stats) {
     data.push(stats[key].length);
   }
 
-  drawBars(data, labels, 'Deler pr fase', 'barchart')
+  drawBars(data, labels, 'Deler pr fase', 'parts-barchart')
+}
+
+function drawVolumeBarChart(stats) {
+  let labels = []
+  for (let i = 1; i < 8; i++) labels.push('Fase ' + i);
+
+  let data = [];
+  for (let key in stats) {
+    data.push(stats[key]);
+  }
+
+  drawBars(data, labels, 'Volum pr fase', 'volume-barchart')
 }
 
 function drawProgressPieChart() {
@@ -104,7 +140,7 @@ function drawProgressPieChart() {
   let data = [d['Prosjektert'] - d['Fjernet'], d['Fjernet'] , d['Lagt_til']];
   let labels = ['Prosjektert utgravd', 'Faktisk utgravd', 'Faktisk fylt ut'];
 
-  drawDoughNut(data, labels, 'Fremdrift, grunnarbeid', 'piechart');
+  drawDoughNut(data, labels, 'Fremdrift, grunnarbeid', 'voxel-piechart');
 }
 
 function getVolumeData(){
@@ -122,13 +158,7 @@ function getVolumeData(){
   });
 }
 
-function drawPlannedVolumeIndicator() {
-  let v = vData[0]['Prosjektert'];
-  v = v.toLocaleString();
-  document.getElementById('indicator-planned').innerHTML = v  + ' m<sup>3</sup>';
-}
-
-function drawCurrentVolumeIndicator() {
+function drawVoxelVolumeIndicators() {
   let range = document.querySelector('.range input');
   let p = range.value;
   let c = 0
@@ -145,20 +175,24 @@ function drawCurrentVolumeIndicator() {
   let r = vData[c]['Fjernet'];
   let a = vData[c]['Lagt_til'];
   let prog = (r/pr)*100
+  let prosj = pr - r;
+  prosj = prosj.toLocaleString();
   r = r.toLocaleString();
   a = a.toLocaleString();
   prog = Math.round(prog);
+  document.getElementById('indicator-planned').innerHTML = prosj + ' m<sup>3</sup>';
   document.getElementById('indicator-removed').innerHTML = r + ' m<sup>3</sup>';
   document.getElementById('indicator-added').innerHTML = a + ' m<sup>3</sup>';
   document.getElementById('indicator-diggingprogress').innerHTML = prog + ' %';
 }
 
 async function startDashboard(stats) {
-  drawCountIndicator(stats);
-  drawProgressBarChart(stats);
+  drawCountIndicator(stats.parts);
+  drawVolumeIndicator(stats.volume);
+  drawPartsBarChart(stats.parts);
+  drawVolumeBarChart(stats.volume);
   let vd = await getVolumeData();
   drawProgressPieChart();
-  drawPlannedVolumeIndicator();
-  drawCurrentVolumeIndicator();
+  drawVoxelVolumeIndicators();
 }
 

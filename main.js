@@ -5,8 +5,12 @@ require([
   "esri/identity/IdentityManager",
   "esri/WebScene",
   "esri/views/SceneView",
-  "esri/webscene/Slide"
-], function (intl, Portal, OAuthInfo, esriId, WebScene, SceneView, Slide) {
+  "esri/webscene/Slide",
+  "modules/StreamService.js",
+  "modules/LayerList.js",
+  "modules/SliceWidget.js",
+  "modules/Vehicles.js"
+], function (intl, Portal, OAuthInfo, esriId, WebScene, SceneView, Slide, StreamService, LayerList, SliceWidget, Vehicles) {
 
   // Set app locale to Norwegian
   //intl.setLocale('nb');
@@ -22,14 +26,12 @@ require([
     appId: 'rZtoqZKEsZwK5bLD',
     popup: false
   });
+  
   esriId.registerOAuthInfos([info]);
-
   esriId
     .checkSignInStatus(info.portalUrl + '/sharing')
     .then(() => {
-      startGISViewer();
-      loggedIn = true;
-      document.getElementById('login-btn').innerText = 'Logg ut';
+      whenLoggedIn(esriId.credentials[0].userId);
     })
     .catch(() => {// User not logged in
       esriId.getCredential(info.portalUrl + '/sharing');
@@ -41,11 +43,15 @@ require([
       window.location.reload();
     } else {
       esriId.getCredential(info.portalUrl + '/sharing');
-      startGISViewer();
-      document.getElementById('login-btn').innerText = 'Logg ut';
-      loggedIn = true;
+      //whenLoggedIn(esriId.credentials[0].userId);
     }
   });
+
+  function whenLoggedIn(userId) {
+    startGISViewer();
+    document.getElementById('login-btn').innerText = userId;
+    loggedIn = true;
+  }
 
   /****************************************************************************
    *  Create Web Scene and View
@@ -72,7 +78,16 @@ require([
       map: webscene
     });
 
+    
+   
+    
+
     view.when(function () {
+      //Add widgets
+      //SliceWidget.addWidget(view, webscene);
+      LayerList.addWidget(view);
+
+
       // Execute code when view has loaded
       let progBar = document.querySelector('.range input');
       progBar.addEventListener('input', e => {
@@ -94,8 +109,12 @@ require([
           phaseSlide.applyTo(view)
         }
       })
+
+
+      //StreamService.addStream(webscene);
     });
    }
 
+   Vehicles.updateList();
    loadBIMViewer();
 });
