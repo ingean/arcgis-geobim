@@ -7,6 +7,7 @@
 #db-content {
   display: flex;
   flex-direction: column;
+  overflow-y: scroll;
 }
 
 #db-cards {
@@ -32,12 +33,14 @@
 }
 
 .db-card-s {
-  height: 45%;
+  /* height: 45%; */
+  max-height: 150px;
   width: 200px;
 }
 
 .db-card-l {
-  height: 75%;
+  /* height: 75%; */
+  max-height: 200px;
   width: 300px;
 }
 
@@ -62,4 +65,15 @@
 
 .i-footer {
   font-size: small;
+}
+
+.db-list-item {
+  display: flex;
+  flex-direction: row;
+  max-width: 300px;
+  min-width: 300px;
+}
+
+.db-list-text {
+  font-size: x-small;
 }

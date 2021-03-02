@@ -25,10 +25,11 @@ function(QueryTask, Query) {
   function updateVehicleList(features) {
     for (feature of features) {
       let a = feature.attributes;
+      let speed = Math.round(a.Speed);
       addListItem(
         'machine-list',
         a.DumperMachineName + ' ' + 
-        a.Speed + ' km/t')
+        speed + ' km/t')
     }
   }
 
@@ -37,7 +38,7 @@ function(QueryTask, Query) {
     let item = document.createElement('div');
     let text = document.createElement('div');
     let icon = document.createElement('div');
-    item.className = 'db-list-item';
+    item.className = 'c';
     text.className = 'db-list-text';
     icon.className = iconClass;
     icon.innerHTML = iconImg
