@@ -29,6 +29,7 @@
     <link rel="stylesheet" type="text/css" href="css/main.css" />
     <link rel="stylesheet" type="text/css" href="css/dashboard.css" />
     <link rel="stylesheet" type="text/css" href="css/progressbar.css" />
+    <link rel="stylesheet" type="text/css" href="css/parsellbar.css" />
   </head>
 
   <body>
@@ -96,26 +97,30 @@
         </div>
       </div>
       <div class="db-panel">
-        <a href="javascript:void(0)" id="closebtn">×</a>
-        <div id="db-content">
-          <div id="progressbar-container">
-            <div id="progressbar-header">Prosjektfremdrift</div>
-            <div id="progressbar">
-              <div class="range">
-                <input id="range-bar" type="range" min="1" max="7" steps="1" value="1">
+        <div class="db-row"> <!-- Dashboard header-->
+          <img src="images/logo.png">
+          <div class="db-header-text">Prosjektfremdrift</div>
+          <a href="javascript:void(0)" id="closebtn">×</a>
+        </div>
+        <div class="db-row"> <!-- Dashboard cards-->
+          <div class="db-column">
+            <div id="progressbar-container">
+              <div id="progressbar-header">Velg fase</div>
+              <div id="progressbar">
+                <div class="range">
+                  <input id="range-bar" type="range" min="1" max="7" steps="1" value="1">
+                </div>
+                <ul id="range-labels" class="range-labels">
+                  <li class="active selected">Fase 1</li>
+                  <li>Fase 2</li>
+                  <li>Fase 3</li>
+                  <li>Fase 4</li>
+                  <li>Fase 5</li>
+                  <li>Fase 6</li>
+                  <li>Fase 7</li>
+                </ul>
               </div>
-              <ul id="range-labels" class="range-labels">
-                <li class="active selected">Fase 1</li>
-                <li>Fase 2</li>
-                <li>Fase 3</li>
-                <li>Fase 4</li>
-                <li>Fase 5</li>
-                <li>Fase 6</li>
-                <li>Fase 7</li>
-              </ul>
             </div>
-          </div>
-          <div id="db-cards">
             <div class="db-row">
               <div class="db-card db-card-s db-indicator">
                 <div class="i-header">Antall deler</div>
@@ -131,8 +136,6 @@
                   <div id="indicator-volume" class="i-text"></div>  
                 </div>
               </div>
-            </div>
-            <div class="db-row">
               <div class="db-card db-card-s db-indicator">
                 <div class="i-header">Faktisk utgravd</div>
                 <div class="i-text-container">
@@ -140,6 +143,8 @@
                   <div id="indicator-removed" class="i-text"></div>  
                 </div>
               </div>
+            </div>
+            <div class="db-row">
               <div class="db-card db-card-s db-indicator">
                 <div class="i-header">Gjenstående graving</div>
                 <div class="i-text-container">
@@ -147,8 +152,6 @@
                   <div id="indicator-planned" class="i-text"></div>  
                 </div>
               </div>
-            </div>
-            <div class="db-row">
               <div class="db-card db-card-s db-indicator">
                 <div class="i-header">Faktisk utfylt</div>
                 <div class="i-text-container">
@@ -164,17 +167,52 @@
                 </div>
               </div>
             </div>
-            <div class="db-card db-card-l">
-              <canvas id="parts-barchart"></canvas>
+          </div>
+          <div class="db-column">
+            <div id="parsellbar-container">
+              <div id="parsellbar-header">Velg parsell</div>
+              <div id="parsellbar">
+              </div>
             </div>
-            <div class="db-card db-card-l">
-              <canvas id="volume-barchart"></canvas>
+            <div class="db-row">
+              <div class="db-card db-card-l">
+                <canvas id="parts-barchart"></canvas>
+              </div>
+              <div class="db-card db-card-l">
+                <canvas id="volume-barchart"></canvas>
+              </div>
+              <div class="db-card db-card-l">
+                <canvas id="voxel-piechart"></canvas>
+              </div>
             </div>
-            <div class="db-card db-card-l">
-              <canvas id="voxel-piechart"></canvas>
-            </div>
-            <div class="db-card db-card-l">
+          </div>
+          <div class="db-column">
+            <div class="db-card db-card-lt">
+              <div class="i-header">Kjøretøy</div>
               <div id="machine-list" class="db-list"></div>
+            </div>
+          </div>
+          <div class="db-column">
+            <div class="db-card db-card-s db-indicator">
+              <div class="i-header">Antall kjøretøy</div>
+              <div class="i-text-container">
+                <div class="icon-ui-chart i-icon"></div>
+                <div id="indicator-vehicles" class="i-text"></div>  
+              </div>
+            </div>
+            <div class="db-card db-card-s db-indicator">
+              <div class="i-header">Sum last</div>
+              <div class="i-text-container">
+                <div class="icon-ui-chart i-icon"></div>
+                <div id="indicator-sumload" class="i-text"></div>  
+              </div>
+            </div>
+            <div class="db-card db-card-s db-indicator">
+              <div class="i-header">Høyeste hastighet</div>
+              <div class="i-text-container">
+                <div class="icon-ui-chart i-icon"></div>
+                <div id="indicator-maxspeed" class="i-text"></div>  
+              </div>
             </div>
           </div>
         </div>
@@ -188,6 +226,7 @@
     <script src="lib/Chart.min.js"></script>
     <script src="gui/panels.js"></script>
     <script src="gui/progressbar.js"></script>
+    <script src="gui/parsellbar.js"></script>
     <script src="modules/Forge.js"></script>
     <script src="modules/Dashboard.js"></script>
     <script src="main.js"></script> 

@@ -13,9 +13,8 @@ function(QueryTask, Query) {
     let query = new Query();
     query.returnGeometry = true;
     query.outFields = ["*"];
-    query.where = "1=1";  // Return all cities with a population greater than 1 million
+    query.where = "1=1"; 
   
-    // When resolved, returns features and graphics that satisfy the query.
     queryTask.execute(query)
     .then(results => {
       updateVehicleList(results.features);
@@ -23,44 +22,74 @@ function(QueryTask, Query) {
   }
 
   function updateVehicleList(features) {
+    
+    let count = features.length
+    let sumload = 0;
+    let maxspeed = 0;
+    
     for (feature of features) {
 
       let a = feature.attributes;
       let item  = document.getElementById(a.Id);
 
       (item) ? updateListItem(a) : addListItem(a);
+      sumload += a.Quantity;
+      if (a.Speed > maxspeed) maxspeed = a.Speed;
         
     }
+
+    document.getElementById('indicator-vehicles').innerHTML = count;
+    document.getElementById('indicator-sumload').innerHTML = sumload.toLocaleString() + ' m<sup>3</sup>';
+    document.getElementById('indicator-maxspeed').innerHTML = Math.round(maxspeed) + ' km/t';
+
   }
 
   function addListItem(feature) {
     let list = document.getElementById('machine-list');
     let item = document.createElement('div');
-    let text = document.createElement('div');
     let icon = document.createElement('div');
+    let textcontainer = document.createElement('div');
+    let header = document.createElement('div');
+    let body = document.createElement('div');
+    let footer = document.createElement('div');
+    
     item.className = 'db-list-item';
-    text.className = 'db-list-text';
-    icon.className = 'icon-ui-map-pin';
+    icon.className = 'icon-ui-grant';
+    if (feature.Speed > 6) icon.className = 'icon-ui-deny icon-ui-red'
+    textcontainer.className = 'db-list-text';
+    header.className = 'db-list-text db-list-text-header';
+    body.className = 'db-list-text db-list-text-body';
+    footer.className = 'db-list-text db-list-text-footer';
 
     item.id = feature.Id
-    updateItem(item, text, feature);
+    updateItem(item, header, body, footer, feature);
     
+    textcontainer.appendChild(header);
+    textcontainer.appendChild(body);
+    textcontainer.appendChild(footer);
+
     item.appendChild(icon);
-    item.appendChild(text);
+    item.appendChild(textcontainer);
     list.appendChild(item);
   }
 
   function updateListItem(feature) {
     let item = document.getElementById(feature.Id);
-    let text = item.childNodes[1];
-     updateItem(item, text, feature);
+    let textcontainer = item.childNodes[1];
+    let header = textcontainer.childNodes[0];
+    let body = textcontainer.childNodes[1];
+    let footer = textcontainer.childNodes[2];
+     updateItem(item, header, body, footer, feature);
   }
 
-  function updateItem(item, text, feature) {
-    item.setAttribute('data-xcoord', feature.POINT_X);
-    item.setAttribute('data-ycoord', feature.POINT_Y);
+  function updateItem(item, header, body, footer, f) {
+    item.setAttribute('data-xcoord', f.POINT_X);
+    item.setAttribute('data-ycoord', f.POINT_Y);
 
-    text.innerHTML = feature.DumperMachineName + ' ' + Math.round(feature.Speed) + ' km/t';
+    let speed = Math.round(f.Speed) + ' km/t'
+    header.innerHTML = `${f.TaskDescription_1}`;
+    body.innerHTML = `${f.Quantity} m3 ${f.MassTypeName.toLowerCase()} med ${f.LoaderMachineTypeId.toLowerCase()} i ${speed}`;
+    footer.innerHTML = `Sist oppdatert ${f.Dato}`;
   }
 
 

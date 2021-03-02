@@ -135,5 +135,6 @@ require([
    }
 
    setInterval(Vehicles.updateList(), 10000);
+   createBar(21);
    loadBIMViewer();
 });

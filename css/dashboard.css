@@ -5,26 +5,21 @@
   --color-card-hl: rgba(90, 189, 249, 1);
 } 
 
-#db-content {
-  display: flex;
-  flex-direction: column;
-  overflow-y: scroll;
-}
-
-#db-cards {
-  display: flex;
-  flex-direction: row;
-}
-
-.db-row {
+.db-column {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
 }
 
+.db-row {
+  display: flex;
+  flex-direction: row;
+}
+
 .db-card {
   position: relative;
   bottom: 0;
+  color: var(--color-card-txt);
   background-color: var(--color-card-bg);
   display: flex;
   flex-direction: column;
@@ -32,7 +27,6 @@
 }
 
 .db-card-s {
-  /* height: 45%; */
   height: 60px;
   width: 200px;
   padding: 25px;
@@ -40,8 +34,14 @@
 }
 
 .db-card-l {
-  /* height: 75%; */
   height: 200px;
+  width: 300px;
+  padding: 20px;
+  margin: 10px;
+}
+
+.db-card-lt {
+  height: 340px;
   width: 300px;
   padding: 20px;
   margin: 10px;
@@ -70,6 +70,10 @@
   font-size: small;
 }
 
+.db-list {
+  overflow-y: scroll;
+}
+
 .db-list-item {
   display: flex;
   flex-direction: row;
@@ -78,11 +82,23 @@
   padding: 3px;
   color: var(--color-card-txt);
   align-items: center;
+  border-bottom: 1px;
+  cursor: pointer;
 }
 
 .db-list-text {
-  font-size: small;
+  display: flex;
+  flex-direction: column;
   font-family: "Avenir Next W01","Avenir Next W00","Avenir Next","Avenir","Helvetica Neue",sans-serif;
+  margin-left: 7px;
+}
+
+.db-list-text-header {
+  font-size: small;
+}
+
+.db-list-text-body, .db-list-text-footer {
+  font-size: x-small;
 }
 
 .db-list-item:hover, .db-list-item.active {

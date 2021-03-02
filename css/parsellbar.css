@@ -1,0 +1,48 @@
+:root {
+  --color-pbar: #f1f1f1;
+  --color-pbar-bg: #333333;
+  --color-pbar-hl: #5abdf9;
+}
+
+#parsellbar-container {
+  display: flex;
+  flex-direction: column;
+  color: var(--color-pbar);
+  background: var(--color-pbar-bg);
+  width: 1065px;
+  height: 120px;
+  margin: 10px 5px 5px 5px;
+}
+
+#parsellbar-header {
+  font-size: medium;
+  padding-left: 20px;
+  padding-bottom: 10px;
+}
+
+#parsellbar {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.db-pbar-item {
+  display: flex;
+  flex-direction: column;
+  width: 45px;
+  margin: 2px;
+}
+
+.db-pbar-text {
+  font-size: xx-small;
+}
+
+.db-pbar-status {
+  height: 10px;
+  background: var(--color-pbar);
+  cursor: pointer;
+}
+.db-pbar-status-complete {
+  background: var(--color-pbar-hl);
+}
+
