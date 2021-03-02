@@ -1,10 +1,27 @@
 :root {
   --color-bar: #f1f1f1;
+  --color-bar-bg: #333333;
   --color-bar-hl: #5abdf9;
 }
 
+#progressbar-container {
+  display: flex;
+  flex-direction: column;
+  color: var(--color-bar);
+  background: var(--color-bar-bg);
+  width: 770px;
+  height: 120px;
+  margin: 10px 5px 5px 5px;
+}
+
+#progressbar-header {
+  font-size: medium;
+  padding-left: 20px;
+  padding-bottom: 10px;
+}
+
 #progressbar {
-  padding: 50px 0 40px 200px;
+  padding: 20px 20px 20px 75px;
 }
 
 #range-bar {
@@ -20,7 +37,7 @@
 
 .range {
   position: relative;
-  width: 550px;
+  width: 600px; /* 550px */
   height: 5px;
 }
 
@@ -108,7 +125,7 @@
 .range-labels li {
   position: relative;
   float: left;
-  width: 90.25px;
+  width: 98.6px; /* 90.25 */
   text-align: center;
   color: var(--color-bar);
   font-size: 14px;

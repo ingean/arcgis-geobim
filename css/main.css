@@ -28,10 +28,12 @@ header {
   display: flex;
   flex-direction: row;
   flex: 1 1 auto;
+  transition: 0.5s;
 }
 
 .viewer-panel {
   width: 50%;
+  transition: 0.5s;
 }
 
 
@@ -43,6 +45,7 @@ header {
   margin: 0;
   height: calc(100% - 463px);
   width: 50%;
+  transition: 0.5s;
 }
 
 #BIMViewer {
@@ -51,6 +54,7 @@ header {
   top: 63px;
   height: calc(100% - 463px);
   width: 50%;
+  transition: 0.5s;
 }
 
 
@@ -68,7 +72,7 @@ header {
   text-decoration: none;
   font-size: 25px;
   color: var(--color-panel-txt);
-  transition: 0.3s;
+  transition: 0.5s;
 }
 
 .db-panel a:hover {

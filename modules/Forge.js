@@ -83,7 +83,7 @@ function getProperties() {
 
     props = data;
     //viewer.isolate(dbIds);
-    viewer.fitToView(data[1]);
+    viewer.fitToView(data.parts[1]);
     startDashboard(data);
   })
   .catch(err => {

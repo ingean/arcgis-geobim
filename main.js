@@ -78,10 +78,6 @@ require([
       map: webscene
     });
 
-    
-   
-    
-
     view.when(function () {
       //Add widgets
       //SliceWidget.addWidget(view, webscene);
@@ -110,11 +106,34 @@ require([
         }
       })
 
+      document
+      .querySelectorAll('.db-list-item').forEach(item => {
+        item.addEventListener('click', e => {
+          let active = document.querySelector('.db-list-item.active');
+          if (active) {
+            active.className = active.className.replace(' active', '');
+          }
+          
+          let i = e.currentTarget;
+          i.className += ' active';
+          let x = i.getAttribute('data-xcoord');
+          let y = i.getAttribute('data-ycoord');
+          
+          let point = {
+            type: 'point',
+            x: x,
+            y: y,
+            spatialReference: {wkid: 25833}
+          }
+          view.center = point;
+        });   
+      })
 
+ 
       //StreamService.addStream(webscene);
     });
    }
 
-   Vehicles.updateList();
+   setInterval(Vehicles.updateList(), 10000);
    loadBIMViewer();
 });
