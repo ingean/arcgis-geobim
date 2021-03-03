@@ -21,6 +21,27 @@ function(QueryTask, Query) {
     });
   }
 
+  function updateVehicles() {
+    return new Promise((resolve, reject) => {
+      let queryTask = new QueryTask({
+        url: url
+      });
+      let query = new Query();
+      query.returnGeometry = true;
+      query.outFields = ["*"];
+      query.where = "1=1"; 
+  
+      queryTask.execute(query)
+      .then(results => {
+        updateVehicleList(results.features);
+        resolve();
+      })
+      .catch(error => {
+        reject(error);
+      });
+    })
+  }
+
   function updateVehicleList(features) {
     
     let count = features.length
@@ -30,7 +51,7 @@ function(QueryTask, Query) {
     for (feature of features) {
 
       let a = feature.attributes;
-      let item  = document.getElementById(a.Id);
+      let item  = document.getElementById(a.globalid);
 
       (item) ? updateListItem(a) : addListItem(a);
       sumload += a.Quantity;
@@ -61,7 +82,7 @@ function(QueryTask, Query) {
     body.className = 'db-list-text db-list-text-body';
     footer.className = 'db-list-text db-list-text-footer';
 
-    item.id = feature.Id
+    item.id = feature.globalid
     updateItem(item, header, body, footer, feature);
     
     textcontainer.appendChild(header);
@@ -74,7 +95,7 @@ function(QueryTask, Query) {
   }
 
   function updateListItem(feature) {
-    let item = document.getElementById(feature.Id);
+    let item = document.getElementById(feature.globalid);
     let textcontainer = item.childNodes[1];
     let header = textcontainer.childNodes[0];
     let body = textcontainer.childNodes[1];
@@ -92,10 +113,15 @@ function(QueryTask, Query) {
     footer.innerHTML = `Sist oppdatert ${f.Dato}`;
   }
 
+  async function update() {
+    const t1 = new Date();
+    await updateVehicles();
+    setTimeout(update, Math.max(0, 6000 - new Date + t1));
+  }
 
   return {
     updateList: () => {
-      getFeatures();
+      update();
     } 
   }
 })

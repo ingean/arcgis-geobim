@@ -133,19 +133,19 @@ function drawVolumeBarChart(stats) {
   drawBars(data, labels, 'Volum pr fase', 'volume-barchart')
 }
 
-function drawProgressPieChart() {
+function drawVoxelVolumePieChart(vVol = vData) {
   let range = document.querySelector('.range input');
   let phase = range.value;
-  let d = vData[phase - 1];
+  let d = vVol[phase - 1];
   let data = [d['Prosjektert'] - d['Fjernet'], d['Fjernet'] , d['Lagt_til']];
   let labels = ['Prosjektert utgravd', 'Faktisk utgravd', 'Faktisk fylt ut'];
 
   drawDoughNut(data, labels, 'Fremdrift, grunnarbeid', 'voxel-piechart');
 }
 
-function getVolumeData(){
+function getVolumeData(pnr){
   return new Promise((resolve, reject) => {
-    fetch(agolUrl+'/query?where=1=1&f=json&outFields=*')
+    fetch(agolUrl+`/query?where=Parsell=${pnr}&f=json&outFields=*`)
     .then(res => {
       res.json()
       .then(r => {
@@ -158,7 +158,7 @@ function getVolumeData(){
   });
 }
 
-function drawVoxelVolumeIndicators() {
+function drawVoxelVolumeIndicators(vVol = vData) {
   let range = document.querySelector('.range input');
   let p = range.value;
   let c = 0
@@ -171,9 +171,9 @@ function drawVoxelVolumeIndicators() {
     c = 11;
   }
 
-  let pr = vData[c]['Prosjektert'];
-  let r = vData[c]['Fjernet'];
-  let a = vData[c]['Lagt_til'];
+  let pr = vVol[c]['Prosjektert'];
+  let r = vVol[c]['Fjernet'];
+  let a = vVol[c]['Lagt_til'];
   let prog = (r/pr)*100
   let prosj = pr - r;
   prosj = prosj.toLocaleString();
@@ -186,13 +186,19 @@ function drawVoxelVolumeIndicators() {
   document.getElementById('indicator-diggingprogress').innerHTML = prog + ' %';
 }
 
-async function startDashboard(stats) {
+function startDashboard(stats) {
   drawCountIndicator(stats.parts);
   drawVolumeIndicator(stats.volume);
   drawPartsBarChart(stats.parts);
   drawVolumeBarChart(stats.volume);
-  let vd = await getVolumeData();
-  drawProgressPieChart();
-  drawVoxelVolumeIndicators();
+  updateVoxelVolumeCards();
 }
+
+async function updateVoxelVolumeCards(pnr = 3) {
+  if(pnr != 3 && pnr != 9) pnr = 3;
+
+  let pVol = await getVolumeData(pnr);
+  drawVoxelVolumePieChart(pVol);
+  drawVoxelVolumeIndicators(pVol);
+} 
 

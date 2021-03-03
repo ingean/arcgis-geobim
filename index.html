@@ -97,8 +97,8 @@
         </div>
       </div>
       <div class="db-panel">
-        <div class="db-row"> <!-- Dashboard header-->
-          <img src="images/logo.png">
+        <div class="db-row db-header"> <!-- Dashboard header-->
+          <div class="icon-ui-dashboard"></div>
           <div class="db-header-text">Prosjektfremdrift</div>
           <a href="javascript:void(0)" id="closebtn">×</a>
         </div>
@@ -122,48 +122,30 @@
               </div>
             </div>
             <div class="db-row">
-              <div class="db-card db-card-s db-indicator">
-                <div class="i-header">Antall deler</div>
-                <div class="i-text-container">
-                  <div class="icon-ui-chart i-icon"></div>
-                  <div id="indicator-parts" class="i-text"></div>  
+              <div class="db-column">
+                <div class="db-card db-card-s db-indicator">
+                  <div class="i-header">Antall deler</div>
+                  <div class="i-text-container">
+                    <div class="icon-ui-chart i-icon"></div>
+                    <div id="indicator-parts" class="i-text"></div>  
+                  </div>
+                </div>
+                <div class="db-card db-card-s db-indicator">
+                  <div class="i-header">Volum</div>
+                  <div class="i-text-container">
+                    <div class="icon-ui-chart i-icon"></div>
+                    <div id="indicator-volume" class="i-text"></div>  
+                  </div>
                 </div>
               </div>
-              <div class="db-card db-card-s db-indicator">
-                <div class="i-header">Volum</div>
-                <div class="i-text-container">
-                  <div class="icon-ui-chart i-icon"></div>
-                  <div id="indicator-volume" class="i-text"></div>  
+              <div class="db-column">
+                <div class="db-card db-card-l">
+                  <canvas id="parts-barchart"></canvas>
                 </div>
               </div>
-              <div class="db-card db-card-s db-indicator">
-                <div class="i-header">Faktisk utgravd</div>
-                <div class="i-text-container">
-                  <div class="icon-ui-chart i-icon"></div>
-                  <div id="indicator-removed" class="i-text"></div>  
-                </div>
-              </div>
-            </div>
-            <div class="db-row">
-              <div class="db-card db-card-s db-indicator">
-                <div class="i-header">Gjenstående graving</div>
-                <div class="i-text-container">
-                  <div class="icon-ui-chart i-icon"></div>
-                  <div id="indicator-planned" class="i-text"></div>  
-                </div>
-              </div>
-              <div class="db-card db-card-s db-indicator">
-                <div class="i-header">Faktisk utfylt</div>
-                <div class="i-text-container">
-                  <div class="icon-ui-chart i-icon"></div>
-                  <div id="indicator-added" class="i-text"></div>  
-                </div>
-              </div>
-              <div class="db-card db-card-s db-indicator">
-                <div class="i-header">Ferdigstillelse</div>
-                <div class="i-text-container">
-                  <div class="icon-ui-chart i-icon"></div>
-                  <div id="indicator-diggingprogress" class="i-text"></div>  
+              <div class="db-column">
+                <div class="db-card db-card-l">
+                  <canvas id="volume-barchart"></canvas>
                 </div>
               </div>
             </div>
@@ -175,14 +157,42 @@
               </div>
             </div>
             <div class="db-row">
-              <div class="db-card db-card-l">
-                <canvas id="parts-barchart"></canvas>
+              <div class="db-column">
+                <div class="db-card db-card-s db-indicator">
+                  <div class="i-header">Faktisk utgravd</div>
+                  <div class="i-text-container">
+                    <div class="icon-ui-chart i-icon"></div>
+                    <div id="indicator-removed" class="i-text"></div>  
+                  </div>
+                </div>
+                <div class="db-card db-card-s db-indicator">
+                  <div class="i-header">Gjenstående graving</div>
+                  <div class="i-text-container">
+                    <div class="icon-ui-chart i-icon"></div>
+                    <div id="indicator-planned" class="i-text"></div>  
+                  </div>
+                </div>
               </div>
-              <div class="db-card db-card-l">
-                <canvas id="volume-barchart"></canvas>
+              <div class="db-column">
+                <div class="db-card db-card-s db-indicator">
+                  <div class="i-header">Faktisk utfylt</div>
+                  <div class="i-text-container">
+                    <div class="icon-ui-chart i-icon"></div>
+                    <div id="indicator-added" class="i-text"></div>  
+                  </div>
+                </div>
+                <div class="db-card db-card-s db-indicator">
+                  <div class="i-header">Ferdigstillelse</div>
+                  <div class="i-text-container">
+                    <div class="icon-ui-chart i-icon"></div>
+                    <div id="indicator-diggingprogress" class="i-text"></div>  
+                  </div>
+                </div>
               </div>
-              <div class="db-card db-card-l">
-                <canvas id="voxel-piechart"></canvas>
+              <div class="db-column">
+                <div class="db-card db-card-l">
+                  <canvas id="voxel-piechart"></canvas>
+                </div>
               </div>
             </div>
           </div>
@@ -224,11 +234,11 @@
     <script src="https://developer.api.autodesk.com/modelderivative/v2/viewers/7.*/viewer3D.min.js"></script>
 
     <script src="lib/Chart.min.js"></script>
-    <script src="gui/panels.js"></script>
-    <script src="gui/progressbar.js"></script>
-    <script src="gui/parsellbar.js"></script>
-    <script src="modules/Forge.js"></script>
-    <script src="modules/Dashboard.js"></script>
+    <script src="js/panels.js"></script>
+    <script src="js/progressbar.js"></script>
+    <script src="js/parsellbar.js"></script>
+    <script src="js/forge.js"></script>
+    <script src="js/dashboard.js"></script>
     <script src="main.js"></script> 
   </body>
 </html>

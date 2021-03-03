@@ -56,7 +56,12 @@ require([
   /****************************************************************************
    *  Create Web Scene and View
    ***************************************************************************/
-  function startGISViewer() {
+  function zoomToSlide(slidenr) {
+    let slide = webscene.presentation.slides.getItemAt(slidenr);
+    slide.applyTo(view)
+  }
+  
+   function startGISViewer() {
     webscene = new WebScene({
       portalItem: {
         id: '6633c8f8fe0643d0a23e46447bc5339b'
@@ -79,33 +84,27 @@ require([
     });
 
     view.when(function () {
-      //Add widgets
       //SliceWidget.addWidget(view, webscene);
       LayerList.addWidget(view);
 
 
-      // Execute code when view has loaded
+      // Navigate to corresponding webscene slide when changing phase
       let progBar = document.querySelector('.range input');
       progBar.addEventListener('input', e => {
-        let slides = webscene.presentation.slides;
         let phase = Number(progBar.value);
   
         if (phase >= 2 && phase < 4) {
-          let phaseSlide = webscene.presentation.slides.getItemAt(5);
-          phaseSlide.applyTo(view)
+          zoomToSlide(5);
         }
-
         if (phase >= 4 && phase < 7) {
-          let phaseSlide = webscene.presentation.slides.getItemAt(6);
-          phaseSlide.applyTo(view)
+          zoomToSlide(6);
         }
-
         if (phase >= 7) {
-          let phaseSlide = webscene.presentation.slides.getItemAt(7);
-          phaseSlide.applyTo(view)
+          zoomToSlide(7);
         }
       })
 
+      //Navigate to vehicle position when selecting in list
       document
       .querySelectorAll('.db-list-item').forEach(item => {
         item.addEventListener('click', e => {
@@ -127,14 +126,33 @@ require([
           }
           view.center = point;
         });   
-      })
+      });
 
+      //Navigate to corresponding webscene slide when changing parsell
+      document.querySelectorAll('.db-pbar-item').forEach(item => {
+        item.addEventListener('click', e => {
+          let el = e.currentTarget;
+          let pnr = Number(el.getAttribute('data-pnr'));
+
+          switch (pnr) {
+            case 3:
+              zoomToSlide(3);
+              break;
+            case 5:
+              zoomToSlide(5);
+              break;
+            case 9:
+              zoomToSlide(9);
+              break;
+          }
+        });
+      });
  
       //StreamService.addStream(webscene);
     });
    }
 
-   setInterval(Vehicles.updateList(), 10000);
+   Vehicles.updateList();
    createBar(21);
    loadBIMViewer();
 });

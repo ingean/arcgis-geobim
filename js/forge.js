@@ -6,6 +6,11 @@ const tokenURL = 'https://developer.api.autodesk.com/authentication/v1/authentic
 //const documentId = 'urn:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6Z2VvdGVrXzIwMjEvZi1icnVfSzA5LVMlQzMlQjh0YmFra2RhbGVuLW92ZXJnYW5nc2JydS5ydnQ';
 const documentId = 'urn:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6Z2VvdGVrXzIwMjEvZi1icnVfSzA1LU1vc2VsdmEtYnJ1MDEucnZ0';
 
+const docIds = {
+  5: 'urn:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6Z2VvdGVrXzIwMjEvZi1icnVfSzA1LU1vc2VsdmEtYnJ1MDEucnZ0',
+  9: 'urn:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6Z2VvdGVrXzIwMjEvZi1icnVfSzA5LVMlQzMlQjh0YmFra2RhbGVuLW92ZXJnYW5nc2JydS5ydnQ'
+}
+
 let accessToken = '';
 let timeInSeconds = 0;
 let viewer;
@@ -59,8 +64,13 @@ function initViewer() {
     console.log('Initialization complete, loading a model next...');
     viewer.setLightPreset(2);
     viewer.setEnvMapBackground(false);
-    Autodesk.Viewing.Document.load(documentId, onDocumentLoadSuccess, onDocumentLoadFailure);
+    //Autodesk.Viewing.Document.load(documentId, onDocumentLoadSuccess, onDocumentLoadFailure);
+    loadModel(5);
   })
+}
+
+function loadModel(nr) {
+  Autodesk.Viewing.Document.load(docIds[nr], onDocumentLoadSuccess, onDocumentLoadFailure);
 }
 
 function onDocumentLoadSuccess(viewerDocument) {

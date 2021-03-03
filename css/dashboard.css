@@ -16,6 +16,21 @@
   flex-direction: row;
 }
 
+.db-header {
+  height: 20px;
+  padding: 15px;
+  color: var(--color-card-txt);
+  font-size: x-large; 
+}
+
+#closebtn {
+  position: absolute;
+  bottom: 380px;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
 .db-card {
   position: relative;
   bottom: 0;

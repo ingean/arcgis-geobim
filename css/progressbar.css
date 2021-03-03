@@ -9,19 +9,18 @@
   flex-direction: column;
   color: var(--color-bar);
   background: var(--color-bar-bg);
-  width: 770px;
+  width: 965px;
   height: 120px;
   margin: 10px 5px 5px 5px;
 }
 
 #progressbar-header {
   font-size: medium;
-  padding-left: 20px;
-  padding-bottom: 10px;
+  padding: 20px;
 }
 
 #progressbar {
-  padding: 20px 20px 20px 75px;
+  padding: 10px 20px 20px 75px;
 }
 
 #range-bar {
@@ -37,7 +36,7 @@
 
 .range {
   position: relative;
-  width: 600px; /* 550px */
+  width: 800px; /* 550px */
   height: 5px;
 }
 
@@ -118,22 +117,22 @@
 }
 
 .range-labels {
-  margin: 18px -41px 0;
+  margin: 12px -41px 0;
   padding: 0;
   list-style: none;
 }
 .range-labels li {
   position: relative;
   float: left;
-  width: 98.6px; /* 90.25 */
+  width: 130.25px; /* 90.25 */
   text-align: center;
   color: var(--color-bar);
-  font-size: 14px;
+  font-size: 12px;
   cursor: pointer;
 }
 .range-labels li::before {
   position: absolute;
-  top: -28px;
+  top: -22px;
   right: 0;
   left: 0;
   content: "";

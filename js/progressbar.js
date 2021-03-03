@@ -40,7 +40,7 @@ range.addEventListener('input', (e) => {
   highlightPhase();
   drawCountIndicator(props.parts);
   drawVolumeIndicator(props.volume);
-  drawProgressPieChart();
+  drawVoxelVolumePieChart();
   drawVoxelVolumeIndicators();
 });
 

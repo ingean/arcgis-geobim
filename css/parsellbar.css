@@ -9,15 +9,14 @@
   flex-direction: column;
   color: var(--color-pbar);
   background: var(--color-pbar-bg);
-  width: 1065px;
+  width: 865px;
   height: 120px;
   margin: 10px 5px 5px 5px;
 }
 
 #parsellbar-header {
   font-size: medium;
-  padding-left: 20px;
-  padding-bottom: 10px;
+  padding: 20px;
 }
 
 #parsellbar {
@@ -29,7 +28,7 @@
 .db-pbar-item {
   display: flex;
   flex-direction: column;
-  width: 45px;
+  width: 35px;
   margin: 2px;
 }
 
@@ -44,5 +43,10 @@
 }
 .db-pbar-status-complete {
   background: var(--color-pbar-hl);
+}
+
+.db-pbar-text.active {
+  color: var(--color-pbar-hl);
+  font-weight: bold;
 }
 
