@@ -1,11 +1,10 @@
 define([
   "esri/widgets/Expand",
-  "esri/widgets/LayerList",
-
+  "esri/widgets/LayerList"
 ], 
 function (
   Expand,
-  LayerList,
+  LayerList
 ) 
 {
   function createWidget(view) {

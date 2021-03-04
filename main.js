@@ -6,14 +6,19 @@ require([
   "esri/WebScene",
   "esri/views/SceneView",
   "esri/webscene/Slide",
+  "modules/Panels.js",
+  "modules/Forge.js",
   "modules/StreamService.js",
   "modules/LayerList.js",
   "modules/SliceWidget.js",
-  "modules/Vehicles.js"
-], function (intl, Portal, OAuthInfo, esriId, WebScene, SceneView, Slide, StreamService, LayerList, SliceWidget, Vehicles) {
-
+  "modules/Vehicles.js",
+  "modules/StageBar.js",
+  "modules/SegmentBar.js"
+], function (esriIntl, Portal, OAuthInfo, esriId, WebScene, SceneView, Slide, Panels, Forge, StreamService, LayerList, SliceWidget, Vehicles, StageBar, SegmentBar) {
   // Set app locale to Norwegian
-  //intl.setLocale('nb');
+  esriIntl.setLocale('nb');
+  Panels.init();
+
 
   let webscene;
   let view;
@@ -152,7 +157,8 @@ require([
     });
    }
 
+   StageBar.init();
+   SegmentBar.start(21);
    Vehicles.updateList();
-   createBar(21);
-   loadBIMViewer();
+   Forge.startViewer(); 
 });

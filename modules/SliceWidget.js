@@ -3,7 +3,7 @@ define([
   "esri/views/SceneView",
   "esri/layers/BuildingSceneLayer",
   "esri/widgets/Slice",
-  "esri/widgets/Slice/SlicePlane",
+  "esri/widgets/Slice/SlicePlane"
 ],
 function (WebScene, SceneView, BuildingSceneLayer, Slice, SlicePlane) {
 
