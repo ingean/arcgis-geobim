@@ -1,23 +1,16 @@
 define([
+  "modules/Config.js",
   "modules/Forge.js",
   "modules/Dashboard.js"
 ],
-function(Forge, Dashboard) {
-  const pnames = {
-    1: 'Åsbygda',
-    3: 'Kleggerud',
-    5: 'Moselva',
-    9: 'Søtbakkdalen',
-    21: 'Olum'
-  }
-  
+function(Config, Forge, Dashboard) {
+  const config = Config.settings();
+
+
   function onItemClick(item) {
-      //Find parsell number
-      let pnr = Number(item.getAttribute('data-pnr'));
-    
-      //Set text color active
-      let active = document.querySelector('.db-pbar-item.active');
-      if (active) {
+      let snr = Number(item.getAttribute('data-segment'));
+      let actives = document.querySelectorAll('.db-pbar-text.active');
+      for (active of actives) {
         active.className = active.className.replace(' active', '');
       }
       
@@ -27,42 +20,46 @@ function(Forge, Dashboard) {
       if (pname) pname.className += ' active';
       
       //Switch BIM if applicable
-      if (pnr === 5 || pnr === 9) Forge.loadModel(pnr);
-  
-      //Get volume data for parsell
-      Dashboard.onSegmentChange(pnr);
+      Forge.loadModel(snr);
+      Dashboard.onSegmentChange(snr);
   }
   
-  function createBar(parsels) {
+  function createBar() {
   
     let bar = document.getElementById('parsellbar');
   
-    for (var i = 0; i < parsels; i++) {
+    for (var i = 1; i <= config.segments.count; i++) {
+      let seg = config.segments[i];
+      
       let item = document.createElement('div');
       let header = document.createElement('div');
       let status = document.createElement('div');
       let placename = document.createElement('div');
-      
+      let name = '';
+      let snr = i.toLocaleString('no', {minimumIntegerDigits: 2});
+      header.innerHTML = 'P ' + snr;
+
       item.className = 'db-pbar-item';
-      item.setAttribute('data-pnr', i + 1);
+      item.setAttribute('data-segment', i);
       header.className = 'db-pbar-text';
       status.className = 'db-pbar-status';
-      if (i < 10) status.className = 'db-pbar-status db-pbar-status-complete';
       placename.className = 'db-pbar-text';
+      
+      if (i === 5) {
+        header.className = 'db-pbar-text active';
+        placename.className = 'db-pbar-text active';
+      }
+     
+      if (seg) {
+        if (seg.volume || seg.BIM) status.className = 'db-pbar-status db-pbar-status-complete';
+        (seg.name) ? name = seg.name : name = '';
+      }
   
-      let pnr = (i + 1).toLocaleString('no', {minimumIntegerDigits: 2});
-      
-      header.innerHTML = 'P ' + pnr;
-      
-      let name = '';
-      (i + 1 in pnames) ? name = pnames[i + 1] : name = '';
-      
       placename.innerHTML = name;
       
       item.appendChild(header);
       item.appendChild(status);
       item.appendChild(placename);
-  
       bar.appendChild(item);
   
       item.addEventListener('click', e => {onItemClick(item)});
@@ -70,8 +67,8 @@ function(Forge, Dashboard) {
   }
   //Public properties and methods
   return {
-    start: (count) => {
-      createBar(count);
+    start: () => {
+      createBar();
     },
     onClick: (item) => {
       onItemClick(item);

@@ -1,14 +1,12 @@
 define([
+  "modules/Config.js",
   "modules/Dashboard.js"
 ],
-function(Dashboard) {
+function(Config, Dashboard) {
   const clientId = 'yvANRrDF1Omdkgd8HXHdJwME2DWxNX9u';
   const clientSecret = 'TL8xzPUfzxOqGOHk';
   const tokenURL = 'https://developer.api.autodesk.com/authentication/v1/authenticate';
-  const docIds = {
-    5: 'urn:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6Z2VvdGVrXzIwMjEvZi1icnVfSzA1LU1vc2VsdmEtYnJ1MDEucnZ0',
-    9: 'urn:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6Z2VvdGVrXzIwMjEvZi1icnVfSzA5LVMlQzMlQjh0YmFra2RhbGVuLW92ZXJnYW5nc2JydS5ydnQ'
-  }
+  const config = Config.settings();
 
   let accessToken = '';
   let viewer;
@@ -66,8 +64,11 @@ function(Dashboard) {
     })
   }
 
-  function loadDocument(nr) {
-    Autodesk.Viewing.Document.load(docIds[nr], onDocumentLoadSuccess, onDocumentLoadFailure);
+  function loadDocument(segment) {
+    let documentId = config.segments[segment].BIM;
+    if (documentId) {
+      Autodesk.Viewing.Document.load(documentId, onDocumentLoadSuccess, onDocumentLoadFailure);
+    }
   }
 
   function onDocumentLoadSuccess(viewerDocument) {
@@ -88,9 +89,11 @@ function(Dashboard) {
         return;
       }
 
-      modelProperties = data;
-      //viewer.isolate(dbIds);
-      viewer.fitToView(data.parts[1]);
+      if (data.parts[1]) {
+        modelProperties = data;
+        viewer.fitToView(data.parts[1]);
+      }
+
       Dashboard.start();
     })
     .catch(err => {

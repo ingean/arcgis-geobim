@@ -6,6 +6,7 @@ require([
   "esri/WebScene",
   "esri/views/SceneView",
   "esri/webscene/Slide",
+  "modules/Config.js",
   "modules/Panels.js",
   "modules/Forge.js",
   "modules/StreamService.js",
@@ -15,11 +16,11 @@ require([
   "modules/StageBar.js",
   "modules/SegmentBar.js",
   "modules/SlidesWidget.js"
-], function (esriIntl, Portal, OAuthInfo, esriId, WebScene, SceneView, Slide, Panels, Forge, StreamService, LayerList, SliceWidget, Vehicles, StageBar, SegmentBar, SlidesWidget) {
+], function (esriIntl, Portal, OAuthInfo, esriId, WebScene, SceneView, Slide, Config, Panels, Forge, StreamService, LayerList, SliceWidget, Vehicles, StageBar, SegmentBar, SlidesWidget) {
   // Set app locale to Norwegian
   esriIntl.setLocale('nb');
   Panels.init();
-
+  const config = Config.settings();
 
   let webscene;
   let view;
@@ -96,18 +97,15 @@ require([
 
 
       // Navigate to corresponding webscene slide when changing phase
-      let progBar = document.querySelector('.range input');
-      progBar.addEventListener('input', e => {
-        let phase = Number(progBar.value);
-  
-        if (phase >= 2 && phase < 4) {
-          zoomToSlide(5);
-        }
-        if (phase >= 4 && phase < 7) {
-          zoomToSlide(6);
-        }
-        if (phase >= 7) {
-          zoomToSlide(7);
+      let stageBar = document.querySelector('.range input');
+      stageBar.addEventListener('input', e => {
+
+        let activeSegment = document.querySelector('.db-pbar-text.active');
+        let segment = activeSegment.parentNode.getAttribute('data-segment');
+        if (Number(segment) === 5) {
+          let stage = Number(stageBar.value);
+          let slide = config.stages[stage].slide;
+          if (slide) zoomToSlide(slide);
         }
       })
 
@@ -139,28 +137,18 @@ require([
       document.querySelectorAll('.db-pbar-item').forEach(item => {
         item.addEventListener('click', e => {
           let el = e.currentTarget;
-          let pnr = Number(el.getAttribute('data-pnr'));
-
-          switch (pnr) {
-            case 3:
-              zoomToSlide(3);
-              break;
-            case 5:
-              zoomToSlide(5);
-              break;
-            case 9:
-              zoomToSlide(9);
-              break;
-          }
+          let seg = Number(el.getAttribute('data-segment'));
+          let slide = config.segments[seg].slide;
+          if (slide) zoomToSlide(slide);
         });
       });
  
-      //StreamService.addMachineTracks(webscene);
+      StreamService.addMachineTracks(webscene);
     });
    }
 
    StageBar.init();
-   SegmentBar.start(21);
+   SegmentBar.start();
    Vehicles.updateList();
    Forge.startViewer(); 
 });
