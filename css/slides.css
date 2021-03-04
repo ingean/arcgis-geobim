@@ -1,0 +1,32 @@
+#slidesDiv {
+  background-color: white;
+  opacity: 0.9;
+  color: black;
+  padding: 10px;
+  visibility: hidden;
+  bottom: 20px;
+  overflow-y: auto;
+  text-align: center;
+  height: 360px;
+}
+
+#slidesDiv .slide {
+  cursor: pointer;
+  margin-bottom: 6px;
+}
+
+#slidesDiv .slide .title {
+  text-align: center;
+}
+
+#slidesDiv .slide.active img {
+  box-shadow: 0px 0px 12px black;
+  border-style: solid;
+  border-width: thin;
+  border-color: black;
+}
+
+.esri-collapse__icon.icon-ui-collection::before, 
+.esri-collapse__icon.esri-expand__icon--expanded.icon-ui-collection::before {
+  padding: 8px;
+}

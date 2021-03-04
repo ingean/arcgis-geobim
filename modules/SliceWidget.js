@@ -2,30 +2,32 @@ define([
   "esri/WebScene",
   "esri/views/SceneView",
   "esri/layers/BuildingSceneLayer",
+  "esri/widgets/Expand",
   "esri/widgets/Slice",
   "esri/widgets/Slice/SlicePlane"
 ],
-function (WebScene, SceneView, BuildingSceneLayer, Slice, SlicePlane) {
+function (WebScene, SceneView, BuildingSceneLayer, Expand, Slice, SlicePlane) {
 
   function init(view, webscene) {
+    let sliceDiv = document.getElementById('sliceDiv');
+
+    let expand = new Expand({
+      view: view,
+      content: sliceDiv
+    })
+    
+    view.ui.add(expand, "top-right");
+
     let buildingLayer = webscene.allLayers.find(layer => {
       return layer.title === 'K05-Moselva-bru';
     });  
 
     let sliceWidget = null;
-    let sliceTiltEnabled = true;
-  
-    view.ui.add("slice-menu", "top-right");
-  
+    
     buildingLayer.when(() => {
-      // Iterate through the flat array of sublayers and extract the ones
-      // that should be excluded from the slice widget
       buildingLayer.allSublayers.forEach(layer => {
-        // modelName is standard accross all BuildingSceneLayer,
-        // use it to identify a certain layer
+        
         switch (layer.modelName) {
-          // Because of performance reasons, the Full Model view is
-          // by default set to false. In this scene the Full Model should be visible.
           case "FullModel":
             layer.visible = true;
             break;
@@ -33,68 +35,43 @@ function (WebScene, SceneView, BuildingSceneLayer, Slice, SlicePlane) {
           case "Rooms":
             layer.visible = false;
             break;
-          // Extract the layers that should not be hidden by the slice widget
           default:
             layer.visible = true;
         }
       });
-      addEventListeners(sliceWidget, sliceTiltEnabled)
-      setSliceWidget(view, sliceWidget, sliceTiltEnabled);
+      
+      sliceWidget = setSliceWidget(view, sliceWidget);
+      addEventListeners(sliceWidget);
+
+      sliceDiv.style.visibility = 'visible';
     });
   }
   
-  function setSliceWidget(view, sliceWidget, sliceTiltEnabled) {
-    const plane = new SlicePlane({
-      position: {
-        latitude: 60.2270228,
-        longitude: 10.4086517,
-        z: 190
-      },
-      tilt: 0,
-      width: 29,
-      height: 29,
-      heading: 0.46
-    });
+  function setSliceWidget(view, sliceWidget) {
     let clearPlaneBtn = document.getElementById("clearPlaneBtn");
 
     sliceWidget = new Slice({
       view: view,
       container: "sliceContainer"
     });
-    //sliceWidget.viewModel.excludedLayers.addMany(excludedLayers);
-    sliceTiltEnabled = true;
-    sliceWidget.viewModel.tiltEnabled = sliceTiltEnabled;
-    sliceWidget.viewModel.shape = plane;
-    sliceWidget.viewModel.watch("state", function(value) {
+   
+    sliceWidget.viewModel.tiltEnabled = true;
+    sliceWidget.viewModel.shape = null;
+    sliceWidget.viewModel.watch("state", value => {
       if (value === "ready") {
         clearPlaneBtn.style.display = "none";
       } else {
         clearPlaneBtn.style.display = "inherit";
       }
     });
+    return sliceWidget;
   }
 
-  function addEventListeners(sliceWidget, sliceTiltEnabled) {    
-    let resetPlaneBtn = document.getElementById("resetPlaneBtn");
+  function addEventListeners(sliceWidget) {    
     let clearPlaneBtn = document.getElementById("clearPlaneBtn");
-    
-    resetPlaneBtn.addEventListener("click", function () {
-      document.getElementById("tiltEnabled").checked = true;
-      sliceTiltEnabled = true;
-      sliceWidget.viewModel.tiltEnabled = sliceTiltEnabled;
-      sliceWidget.viewModel.shape = plane;
-    });
-  
-    clearPlaneBtn.addEventListener("click", function () {
+    clearPlaneBtn.addEventListener("click", () => {
       sliceWidget.viewModel.clear();
     });
-  
-    document
-      .getElementById("tiltEnabled")
-      .addEventListener("change", function (event) {
-        sliceTiltEnabled = event.target.checked;
-        sliceWidget.viewModel.tiltEnabled = sliceTiltEnabled;
-      });
   }
   
   return {

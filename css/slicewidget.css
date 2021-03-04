@@ -1,6 +1,7 @@
 #slice-menu {
   padding: 0.8em;
   max-width: 250px;
+  visibility: hidden;
 }
 
 #sliceContainer {
@@ -8,11 +9,11 @@
 }
 
 #sliceOptions {
-  margin: 0 15px;
+  margin: 15px;
 }
 
 #sliceOptions>button {
-  margin-bottom: 15px;
+  margin: 15px;
 }
 
 #sliceContainer {

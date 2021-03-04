@@ -13,8 +13,9 @@ require([
   "modules/SliceWidget.js",
   "modules/Vehicles.js",
   "modules/StageBar.js",
-  "modules/SegmentBar.js"
-], function (esriIntl, Portal, OAuthInfo, esriId, WebScene, SceneView, Slide, Panels, Forge, StreamService, LayerList, SliceWidget, Vehicles, StageBar, SegmentBar) {
+  "modules/SegmentBar.js",
+  "modules/SlidesWidget.js"
+], function (esriIntl, Portal, OAuthInfo, esriId, WebScene, SceneView, Slide, Panels, Forge, StreamService, LayerList, SliceWidget, Vehicles, StageBar, SegmentBar, SlidesWidget) {
   // Set app locale to Norwegian
   esriIntl.setLocale('nb');
   Panels.init();
@@ -89,8 +90,9 @@ require([
     });
 
     view.when(function () {
-      //SliceWidget.addWidget(view, webscene);
       LayerList.addWidget(view);
+      SlidesWidget.addWidget(view, webscene);
+      SliceWidget.addWidget(view, webscene);
 
 
       // Navigate to corresponding webscene slide when changing phase
@@ -153,7 +155,7 @@ require([
         });
       });
  
-      //StreamService.addStream(webscene);
+      //StreamService.addMachineTracks(webscene);
     });
    }
 

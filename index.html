@@ -28,8 +28,9 @@
 
     <link rel="stylesheet" type="text/css" href="css/main.css" />
     <link rel="stylesheet" type="text/css" href="css/dashboard.css" />
-    <link rel="stylesheet" type="text/css" href="css/progressbar.css" />
-    <link rel="stylesheet" type="text/css" href="css/parsellbar.css" />
+    <link rel="stylesheet" type="text/css" href="css/stagebar.css" />
+    <link rel="stylesheet" type="text/css" href="css/segmentbar.css" />
+    <link rel="stylesheet" type="text/css" href="css/slides.css" />
   </head>
 
   <body>
@@ -68,28 +69,19 @@
       </header>
       <div class="viewers-panel">
         <div class="viewer-panel">
-          <div id="GISViewer" class="viewer-panel">
-            <!--div id="slice-menu" class="esri-widget">
-              <div id="sliceContainer"></div>
-              <div id="sliceOptions">
-                <button
-                  class="esri-button esri-button--secondary"
-                  id="resetPlaneBtn"
-                  type="button"
-                  title="Reset slice plane">
-                  Reset slice plane
-                </button>
-                <button
-                  class="esri-button esri-button--secondary"
-                  id="clearPlaneBtn"
-                  type="button"
-                  title="Clear slice plane">
-                  Clear slice
-                </button>
-                <input type="checkbox" id="tiltEnabled" checked /><label
-                  for="tiltEnabled">Allow tilt on slice plane</label>
-              </div>
-            </div-->
+          <div id="GISViewer" class="viewer-panel"></div>
+          <div id="slidesDiv" class="esri-widget"></div>
+          <div id="sliceDiv" class="esri-widget">
+            <div id="sliceContainer"></div>
+            <div id="sliceOptions">
+              <button
+                class="esri-button esri-button--secondary"
+                id="clearPlaneBtn"
+                type="button"
+                title="Clear slice plane">
+                Fjern sektor
+              </button>
+            </div>
           </div>
         </div>
         <div class="viewer-panel">
