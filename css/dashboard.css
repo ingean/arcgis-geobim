@@ -3,6 +3,7 @@
   --color-card-bg: #333333;
   --color-card-hl-bg: rgba(90, 189, 249, 0.2);
   --color-card-hl: rgba(90, 189, 249, 1);
+  --color-card-txt-alert: red;
 } 
 
 .db-column {
@@ -79,6 +80,10 @@
 
 .i-text {
   font-size: x-large;
+}
+
+.i-text-alert {
+  color: var(--color-card-txt-alert);
 }
 
 .i-footer {
