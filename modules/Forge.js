@@ -183,6 +183,9 @@ function(Config, Dashboard) {
     },
     getModelProps: () => {
       return modelProperties;
+    },
+    resizeViewer: () => {
+      if (viewer) viewer.resize();
     }
   }
 });

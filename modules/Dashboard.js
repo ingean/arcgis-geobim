@@ -1,32 +1,28 @@
 define([
-  "modules/Charts.js"
+  "modules/Charts.js",
+  "modules/Config.js"
 ],
-function(Charts) {
+function(Charts, Config) {
   const agolUrl = 'https://services.arcgis.com/2JyTvMWQSnM2Vi8q/arcgis/rest/services/Volumberegninger/FeatureServer/0';
   let vData = {};
   let modelProperties = {};
 
-  function drawVolumeIndicator(stats) {
+  function rangeValue() {
     let range = document.querySelector('.range input');
-    let phase = range.value;
-    let volume = stats[phase - 1];
+    return Number(range.value);
+  }
+
+  function drawVolumeIndicator(stats) {
+    let volume = stats[rangeValue() - 1];
 
     volume = volume.toLocaleString();
     document.getElementById('indicator-volume').innerHTML = volume + ' m<sup>3</sup>';
   }
 
   function drawCountIndicator(stats) {
-    let range = document.querySelector('.range input');
-    let phase = range.value;
-    let count = stats[phase - 1].length;
-    let totCount = 0;
-    
-    for (let key in stats) {
-      totCount += stats[key].length;
-    }
+    let count = stats[rangeValue() - 1].length;
 
     count = count.toLocaleString();
-    totCount = totCount.toLocaleString();
     document.getElementById('indicator-parts').textContent = count;
   }
 
@@ -35,9 +31,7 @@ function(Charts) {
     for (let i = 1; i < 8; i++) labels.push('Fase ' + i);
 
     let data = [];
-    for (let key in stats) {
-      data.push(stats[key].length);
-    }
+    for (let key in stats) data.push(stats[key].length)
 
     Charts.drawBarChart(data, labels, 'Deler pr fase', 'parts-barchart');
   }
@@ -46,18 +40,14 @@ function(Charts) {
     let labels = []
     for (let i = 1; i < 8; i++) labels.push('Fase ' + i);
 
-    let data = [];
-    for (let key in stats) {
-      data.push(stats[key]);
-    }
+    let data = []
+    for (let key in stats) data.push(stats[key])
 
     Charts.drawBarChart(data, labels, 'Volum pr fase', 'volume-barchart')
   }
 
   function drawVoxelVolumePieChart(vVol = vData) {
-    let range = document.querySelector('.range input');
-    let phase = range.value;
-    let d = vVol[phase - 1];
+    let d = vVol[rangeValue() - 1];
     let data = [d['Prosjektert'] - d['Fjernet'], d['Fjernet'] , d['Lagt_til']];
     let labels = ['Prosjektert utgravd', 'Faktisk utgravd', 'Faktisk fylt ut'];
 
@@ -80,17 +70,16 @@ function(Charts) {
   }
 
   function drawVoxelVolumeIndicators(vVol = vData) {
-    let range = document.querySelector('.range input');
-    let p = range.value;
-    let c = 0
+    let phase = rangeValue();
+    let c = Config.settings().stages[phase].volume;
 
-    if(p >= 1 && p < 5) {
+    /* if(p >= 1 && p < 5) {
       c = 1;
     } else if(p >= 5 && p < 7) {
       c = 10;
     } else if(p >= 7) {
       c = 11;
-    }
+    } */
 
     let pr = vVol[c]['Prosjektert'];
     let r = vVol[c]['Fjernet'];

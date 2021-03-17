@@ -92,6 +92,7 @@
 
 .db-list {
   overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 .db-list-item {
