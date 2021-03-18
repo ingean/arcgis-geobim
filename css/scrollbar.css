@@ -1,0 +1,35 @@
+:root {
+  --scrollbar-track-color: transparent;
+  --scrollbar-color: #232323;
+
+  --scrollbar-size: .375rem;
+  --scrollbar-minlength: 1.5rem; /* Minimum length of scrollbar thumb (width of horizontal, height of vertical) */
+}
+
+.overflowing-element {
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+}
+
+.overflowing-element::-webkit-scrollbar {
+  height: var(--scrollbar-size);
+  width: var(--scrollbar-size);
+}
+
+.overflowing-element::-webkit-scrollbar-track {
+  background-color: var(--scrollbar-track-color);
+}
+
+.overflowing-element::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar-color);
+  /* Add :hover, :active as needed */
+}
+
+.overflowing-element::-webkit-scrollbar-thumb:vertical {
+  min-height: var(--scrollbar-minlength);
+}
+
+.overflowing-element::-webkit-scrollbar-thumb:horizontal {
+  min-width: var(--scrollbar-minlength);
+}
