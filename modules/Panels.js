@@ -19,13 +19,15 @@ function(Forge) {
   function resizeViewers() {
     let viewer = document.querySelector('.viewer-panel');
     let viewerStyle = window.getComputedStyle(viewer);
-
+    let panel = document.getElementById("BIMViewer");
+    let width = (panel.style.display === "none") ? '100%' : viewerStyle.width;
+   
     document.getElementById("GISViewer").style.height = viewerStyle.height;
-    document.getElementById("GISViewer").style.width = viewerStyle.width;
+    document.getElementById("GISViewer").style.width = width;
     document.getElementById("BIMViewer").style.height = viewerStyle.height;
     document.getElementById("BIMViewer").style.width = viewerStyle.width;
 
-    Forge.resizeViewer();
+    setTimeout(e => Forge.resizeViewer(), 1000)
   }
 
   
@@ -50,9 +52,10 @@ function(Forge) {
     let panel = document.getElementById("BIMViewer");
     let caption = "Skjul BIM";
 
-    if (style.display === "none") {
+    if (panel.style.display === "none") {
       panel.style.display = "";
       document.getElementById("GISViewer").style.width = '50%';
+      Forge.resizeViewer();
     } else {
       panel.style.display = "none";
       document.getElementById("GISViewer").style.width = '100%';
