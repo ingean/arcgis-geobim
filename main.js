@@ -30,7 +30,8 @@ require([
   let loggedIn = false;
   
   let info = new OAuthInfo({
-    appId: 'rZtoqZKEsZwK5bLD',
+    //appId: 'rZtoqZKEsZwK5bLD',
+    appId: 'xG2kkVesAXGRx5t1', // AppId for arcgis-forge-dashboard (Dev folder at geodata.maps.arcgis.com) 
     popup: false
   });
   

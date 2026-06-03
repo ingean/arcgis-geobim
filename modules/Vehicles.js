@@ -5,7 +5,8 @@ define([
 function(QueryTask, Query) {
 
   const url = 'https://us-iot.arcgis.com/d8avj4l9dv7mdfsa/d8avj4l9dv7mdfsa/maps/arcgis/rest/services/e16_features_Update/FeatureServer/0';
- 
+  //const url = 'https://us-iot.arcgis.com/d8avj4l9dv7mdfsa/d8avj4l9dv7mdfsa/streams/arcgis/rest/services/JevnakerTestStream/FeatureServer/0'
+
   function createDiv(className) {
     let div = document.createElement('div');
     div.className = className;
